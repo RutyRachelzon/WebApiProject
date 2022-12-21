@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="home.js"></script>
+    <meta charset="utf-8" />
+    <title>update details</title>
+    <link href="StyleSheet.css" rel="stylesheet" />
+
+</head>
+<body>
+    
+    <div class="div" id="updateDiv">
+        <h1 class="words">you can update your details </h1>
+        <h3 class="words">press here👇 </h3>
+        <button class="words btn wide_btn" onclick="ShowUserDetailsAfterUpdating()">update details🤔</button>
+        <br /><br />
+        <div id="updateDetails" style="visibility:hidden">
+            <label class="words">enter user name (email)</label><br /><br />
+            <input class="inputs" id="userNameD" type="text" /><br /><br />
+            <label class="words">enter password</label><br /><br />
+            <input class="inputs" id="passwordD" type="password" /><br /><br />
+            <label class="words">enter first name</label><br /><br />
+            <input class="inputs" id="fNameD" type="text" /><br /><br />
+            <label class="words">enter last name</label><br /><br />
+            <input class="inputs" id="lNameD" type="text" /><br /><br />
+            <button class="words btn" onclick="updateDetails()">update🤾‍</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿
+.div {
+    border-color: black;
+    border-width: 1px;
+    margin-left: 40%;
+    height: 500px;
+    width: 450px;
+    text-align: center;
+    padding-top: 100px;
+    margin-right: 100px;
+    border-radius: 1%;
+    opacity: 80%;
+    background-color: rgb(3 78 70 / 56%);
+}
+.btn {
+    border-radius: 10%;
+    border-color: black;
+    border-width: 2px;
+    width: 100px;
+    height: 30px;
+    background-color: rgb(184 205 202);
+
+}
+.inputs {
+    border-color: black;
+    border-width: 2px;
+    width: 200px;
+    height: 20px;
+    background-color: rgb(183 185 184);
+    border-radius: 10%;
+}
+.words {
+    font-family: cursive;
+}
+}
+#login {
+    padding-top: 0px;
+}
+.wide_btn {
+    width: 150px;
+}
+#updateDiv {
+    height: 650px;
+}

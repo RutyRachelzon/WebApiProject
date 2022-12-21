@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script src="home.js"></script>
+    <meta charset="utf-8" />
+    <title>home gage</title>
+    <link href="StyleSheet.css" rel="stylesheet" />
+</head>
+
+<body>
+    
+        <div class="div">
+            <h1 class="words" >welcome !!!</h1>
+            <h1 class="words">we are very happy to meet you again<br/>😋😋😉😉</h1>
+            <label class="words">enter user name(email)</label><br /><br />
+            <input class="inputs" id="userNameSignIn" type="text" /><br /><br />
+            <label class="words">enter password</label><br /><br />
+            <input class="inputs" id="passwordSignIn" type="password" /><br /><br />
+            <button class="words btn" onclick="login()">SignIn</button>
+            <br /><br />
+            <button class="words btn" onclick="showLogin()">new user</button>
+        </div>
+
+    
+    
+    <div class="div" id="login" style="visibility:hidden">
+        <label class="words">enter user name(email)</label><br /><br />
+        <input  class="inputs" id="userName" type="text" /><br /><br />
+        <label class="words">enter password</label><br /><br />
+        <input  class="inputs" id="password" type="password" /><br /><br />
+        <button class="words btn wide_btn" onclick="checkPassword()">check password</button><br/><br/>
+        <label class="words">enter first name</label><br /><br />
+        <input  class="inputs" id="fName" type="text" /><br /><br />
+        <label class="words">enter last name</label><br /><br />
+        <input class="inputs" id="lName" type="text" /><br /><br />
+        <button class="words btn" onclick="enrollToSite()">enrolling🤸‍</button>
+    </div>
+
+    
+</body>
+</html>
