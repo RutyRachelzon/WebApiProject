@@ -38,7 +38,7 @@ namespace MyFirstWebApiSite.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] int value)
         {
         }
 
