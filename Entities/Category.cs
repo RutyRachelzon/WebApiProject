@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Z_Repository
 {
@@ -13,6 +14,7 @@ namespace Z_Repository
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
 
-        public virtual ICollection<Product> Products { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Product>? Products { get; set; }
     }
 }

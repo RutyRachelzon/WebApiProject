@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Z_Repository
 {
@@ -16,6 +17,7 @@ namespace Z_Repository
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual ICollection<Order>? Orders { get; set; }
     }
 }

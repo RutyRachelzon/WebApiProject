@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Z_Repository
 {
@@ -15,7 +16,9 @@ namespace Z_Repository
         public decimal Price { get; set; }
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public virtual User? User { get; set; } = null!;
-        public virtual ICollection<OrderItem>? OrderItems { get; set; }
+        
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Z_Repository
 {
@@ -17,7 +18,9 @@ namespace Z_Repository
         public string Desc { get; set; } = null!;
         public string Image { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual Category? Category { get; set; } = null!;
+        [JsonIgnore]
         public virtual ICollection<OrderItem>? OrderItems { get; set; }
     }
 }
