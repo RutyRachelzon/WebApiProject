@@ -16,17 +16,17 @@ namespace MyFirstWebApiSite.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<IEnumerable<Product>> Get()
+        public async Task<IEnumerable<Product>> Get([FromQuery]string? name, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            return await _productService.getProducts();
+            return await _productService.getProducts(name,minPrice,maxPrice,categoryIds);
         }
 
         // GET api/<ProductController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         //// POST api/<ProductController>
         [HttpPost]

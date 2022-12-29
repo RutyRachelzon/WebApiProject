@@ -15,10 +15,15 @@ namespace Z_Repository
         {
             _KidsClothesContext = kidsClothesContext;
         }
-        public async Task<IEnumerable<Product>> getProducts()
+        public async Task<IEnumerable<Product>> getProducts(string? name,int? minPrice,int? maxPrice, int?[] categoryIds)
         {
-            var products = await (from product in _KidsClothesContext.Products
-                                  select product).ToListAsync();
+            var query = _KidsClothesContext.Products.Where(product =>
+            (name == null ? (true) : (product.ProductName.Contains(name)))
+            && ((minPrice == null) ? (true) : (product.Price >= minPrice))
+            && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))
+            && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId))))
+                .OrderBy(product => product.Price);
+            List<Product> products = await query.ToListAsync();
             return products;
         }
     }

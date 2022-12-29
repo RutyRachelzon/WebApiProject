@@ -2,6 +2,6 @@
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> getProducts();
+        Task<IEnumerable<Product>> getProducts(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds);
     }
 }
