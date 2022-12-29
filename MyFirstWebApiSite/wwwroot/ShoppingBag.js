@@ -9,7 +9,7 @@ function getCart(){
     }
     document.getElementById("itemCount").innerHTML = cart.length;
     document.getElementById("totalAmount").innerHTML = totalCart(cart);
-    drowCart(cart);
+    drowAllCart(cart);
 }
 
 function totalCart(cart) {
@@ -19,7 +19,41 @@ function totalCart(cart) {
     })
     return sum;
 }
+function drowAllCart(cart) {
+    cart.forEach(product => {
+        drowCart(product)
+    })
+}
+function drowCart(product) {
+    var temp = document.getElementsByTagName("template")[0];    
+    var clon = temp.content.cloneNode(true);
+   clon.querySelector(".image").rel = "./images/" + product.image;
+    clon.querySelector(".itemName").innerHTML = product.productName;
+    clon.querySelector(".price").innerHTML = product.price;
+    document.querySelector(".cart").appendChild(clon);
 
-function drowCart() {
+}
+async function placeOrder() {
+    var cart = sessionStorage.getItem("cart");
+    if (cart) {
+        cart = JSON.parse(cart);
+    }
+    const response = await fetch("https://localhost:44335/api/order", {
+        headers: { "Content-type": "application/json" },
+        method: 'POST',
+        body:[
+        {
+        "orderId": 0,
+        "date": Date(),
+        "price": document.getElementById("totalAmount").innerHTML,
+        "userId": 304,
 
+            "orderItems": cart
+        }]
+    });
+    if (response.ok)
+        alert("✌");
+    else {
+        alert("😢");
+    }
 }
