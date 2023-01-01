@@ -35,22 +35,33 @@ function drowCart(product) {
 
 }
 async function placeOrder() {
+    
     var cart = sessionStorage.getItem("cart");
     if (cart) {
         cart = JSON.parse(cart);
     }
+    const order = {
+        "orderId": 0,
+        "date": "2023-01-01T12:55:52.278Z",
+        "price":document.getElementById("totalAmount").innerHTML,
+        "userId":302,
+        "orderItems":[]
+    }
+    for (var i = 0; i < cart.length; i++)
+    {
+        var orderItem = {
+            "orderItemId": 0,
+            "orderId": 0,
+            "productId": cart[i].productId,
+            "quantity": 1
+        }
+        order.orderItems.push(orderItem);
+    }
+    console.log(order);
     const response = await fetch("https://localhost:44335/api/order", {
         headers: { "Content-type": "application/json" },
         method: 'POST',
-        body:[
-        {
-        "orderId": 0,
-        "date": Date(),
-        "price": document.getElementById("totalAmount").innerHTML,
-        "userId": 304,
-
-            "orderItems": cart
-        }]
+        body: JSON.stringify(order)
     });
     if (response.ok)
         alert("✌");
