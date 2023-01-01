@@ -2,7 +2,7 @@
 
 
 function getCart(){
-    console.log("hhhhh");
+    
     var cart = sessionStorage.getItem("cart");
     if (cart) {
        cart= JSON.parse(cart);
@@ -27,7 +27,8 @@ function drowAllCart(cart) {
 function drowCart(product) {
     var temp = document.getElementsByTagName("template")[0];    
     var clon = temp.content.cloneNode(true);
-   clon.querySelector(".image").rel = "./images/" + product.image;
+    console.log(`url(./images/${product.image})`);
+    clon.querySelector(".image").style.backgroundImage = `url(./images/${ product.image})`;
     clon.querySelector(".itemName").innerHTML = product.productName;
     clon.querySelector(".price").innerHTML = product.price;
     document.querySelector(".cart").appendChild(clon);

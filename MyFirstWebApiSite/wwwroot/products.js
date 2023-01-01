@@ -1,4 +1,6 @@
-﻿
+﻿var cart = [];
+
+
 window.addEventListener("load", drowProducts("https://localhost:44335/api/product"));
 window.addEventListener("load", drowCategories());
 
@@ -9,6 +11,7 @@ async function drowProducts(url) {
          drowProduct(products[i]);
     }
     document.getElementById("counter").innerHTML = products.length;
+    showCartLength();
 }
 
 async function getProducts(url) {
@@ -43,9 +46,22 @@ function drowProduct(product) {
     document.getElementById("ProductList").appendChild(clon);
 }
 
-const cart=[];
+async function showCartLength() {
+    if (sessionStorage.getItem("cart"));
+    var box = sessionStorage.getItem("cart");
+    if (box) {
+        var cartLen = JSON.parse(box);
+        document.getElementById("ItemsCountText").innerHTML = cartLen.length;
+    }
+}
+
 
 function addToCart(product) {
+    if (sessionStorage.getItem("cart")) {
+        var oldCart = sessionStorage.getItem("cart");
+        const c = JSON.parse(oldCart);
+        cart = c;
+    }
     cart.push(product);
     console.log(cart);
     sessionStorage.setItem("cart", JSON.stringify(cart));
