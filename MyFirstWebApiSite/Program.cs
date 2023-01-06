@@ -1,9 +1,10 @@
+
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Service;
 using Z_Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -16,9 +17,9 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddDbContext<KidsClothesContext>(options => options.UseSqlServer
-("Data Source=srv2\\pupils;Initial Catalog=KidsClothes;Integrated Security=True;Pooling=False"));
+builder.Services.AddDbContext<KidsClothesContext>(options => options.UseSqlServer(builder.Configuration.GetValue<string>("ConnectionString")));
 builder.Services.AddSwaggerGen();
+builder.Host.UseNLog();
 
 
 var app = builder.Build();

@@ -15,15 +15,29 @@ namespace MyFirstWebApiSite.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly ILogger<UserController> _logger;
+
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
         // GET api/<UserController>/5
         [HttpGet]
         public async Task<ActionResult<User>> Get([FromQuery] string password,string userName)
         {
-           User user= await _userService.getUserById(password, userName);
+            int zero = 0;
+            _logger.LogInformation("userName " + userName + " trying login");
+            try
+            {
+                int num = 100 / zero;
+            }
+            catch(Exception e)
+            {
+                _logger.LogError("error happend! " + e.Message);
+
+            }
+            User user= await _userService.getUserById(password, userName);
             if (user!=null)
             {
                 return Ok(user);
