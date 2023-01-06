@@ -6,7 +6,7 @@ using Z_Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-
+//hi
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
