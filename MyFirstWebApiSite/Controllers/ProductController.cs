@@ -30,14 +30,7 @@ namespace MyFirstWebApiSite.Controllers
 
         }
 
-        // GET api/<ProductController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/<ProductController>
+        
         [HttpPost]
         public  void Post([FromBody] Product product)
         {

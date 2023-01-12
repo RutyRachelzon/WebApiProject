@@ -7,6 +7,10 @@ window.addEventListener("load", drowCategories());
 async function drowProducts(url) {
     await removeAllProducts();
     const products = await getProducts(url);
+    console.log(products[0].price);
+    document.getElementById("minPrice").value = products[0].price;
+    document.getElementById("maxPrice").value = products[products.length-1].price;
+
     console.log(products);
     for (i = 0; i < products.length; i++) {
          drowProduct(products[i]);
