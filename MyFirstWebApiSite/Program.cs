@@ -18,6 +18,12 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddDbContext<KidsClothesContext>(options => options.UseSqlServer(builder.Configuration.GetValue<string>("ConnectionString")));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+
+
+
 builder.Services.AddSwaggerGen();
 builder.Host.UseNLog();
 

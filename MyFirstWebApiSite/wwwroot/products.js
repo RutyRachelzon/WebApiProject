@@ -7,6 +7,7 @@ window.addEventListener("load", drowCategories());
 async function drowProducts(url) {
     await removeAllProducts();
     const products = await getProducts(url);
+    console.log(products);
     for (i = 0; i < products.length; i++) {
          drowProduct(products[i]);
     }

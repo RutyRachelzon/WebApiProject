@@ -2,6 +2,8 @@
 using Z_Repository;
 using Service;
 using System.Text.Json;
+using DTO;
+using AutoMapper;
 
 
 
@@ -14,15 +16,21 @@ namespace MyFirstWebApiSite.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly IMapper _mapper;
+
+        public CategoryController(ICategoryService categoryService,IMapper mapper)
         {
+            _mapper = mapper;
             _categoryService = categoryService;
         }
         // GET: api/<CategoryController>
         [HttpGet]
-        public async Task<IEnumerable<Category>> Get()
+        public async Task<IEnumerable<CategoryDTO>> Get()
         {
-            return await _categoryService.getCategories();
+
+            IEnumerable<Category> category = await _categoryService.getCategories();
+            IEnumerable<CategoryDTO> categoryDTO = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(category);
+            return categoryDTO;
         }
 
         // GET api/<CategoryController>/5

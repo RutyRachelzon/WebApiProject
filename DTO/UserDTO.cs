@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Z_Repository
+namespace DTO
 {
-    public partial class User
+    public class UserDTO
     {
-        public User()
-        {
-            Orders = new HashSet<Order>();
-        }
-
         public int UserId { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public virtual ICollection<Order>? Orders { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using System.Text.Json;
 using Service;
 using Z_Repository;
+using DTO;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,17 +18,21 @@ namespace MyFirstWebApiSite.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+
+        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
         {
             _userService = userService;
             _logger = logger;
+            _mapper = mapper;
         }
         // GET api/<UserController>/5
         [HttpGet]
-        public async Task<ActionResult<User>> Get([FromQuery] string password,string userName)
+        public async Task<ActionResult<UserDTO>> Get([FromQuery] string password,string userName)
         {
             int zero = 0;
+
             _logger.LogInformation("userName " + userName + " trying login");
             try
             {
@@ -39,8 +45,9 @@ namespace MyFirstWebApiSite.Controllers
             }
             User user= await _userService.getUserById(password, userName);
             if (user!=null)
-            {
-                return Ok(user);
+            {            
+                UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+                return Ok(userDTO);
             }
             return NoContent();
         }

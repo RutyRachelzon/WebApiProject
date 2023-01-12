@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Z_Repository;
 using Service;
+using DTO;
+using AutoMapper;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiSite.Controllers
@@ -10,9 +12,12 @@ namespace MyFirstWebApiSite.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService)
+        private readonly IMapper _mapper;
+
+        public OrderController(IOrderService orderService,IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
         // GET: api/<OrderController>
         [HttpGet]
@@ -30,10 +35,12 @@ namespace MyFirstWebApiSite.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order order)
+        public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
         {
-            Order newOrder =await _orderService.addNewOrder(order);
-            return CreatedAtAction(nameof(Get), new { id = newOrder.UserId }, newOrder);
+            Order newOrder = _mapper.Map<OrderDTO, Order>(order);
+            Order afterOrder = await _orderService.addNewOrder(newOrder);
+            OrderDTO newOrderDto = _mapper.Map<Order, OrderDTO>(afterOrder);
+            return CreatedAtAction(nameof(Get), new { id = newOrder.UserId }, newOrderDto);
         }
 
         // PUT api/<OrderController>/5
