@@ -42,13 +42,21 @@ async function drowProducts(url) {
         console.log(products[0].price);
         document.getElementById("minPrice").value = products[0].price;
         document.getElementById("maxPrice").value = products[products.length - 1].price;
-
-        products.forEach(drowProduct);
+        const productsWithQuantity = products.map(createProductWithQuantity);
+        productsWithQuantity.forEach(drowProduct);
         document.getElementById("counter").innerHTML = products.length;
         showCartLength();
     } catch (error) {
         console.log(`Error: ${error.message}`);
     }
+}
+
+const createProductWithQuantity = (product) => {
+    const newProduct = {
+        productType: product,
+        quantity:1
+        }
+    return newProduct
 }
 
 async function getProducts(url) {
@@ -123,7 +131,8 @@ async function fetchCategories() {
     }
 }
 
-function drowProduct(product) {
+function drowProduct(Quantityproduct) {
+    const product = Quantityproduct.productType;
     const temp = document.getElementsByTagName("template")[0];
     const clon = temp.content.cloneNode(true);
     clon.querySelector("h1").innerText = product.productName;
@@ -146,6 +155,12 @@ async function renderCategories() {
 let cart = [];
 
 function addToCart(product) {
+    for (let i = 0; i < cart.length; i++)
+    {
+        const tmpProduct = cart[i];
+        if (tmpProduct.productType.ProductId == product.productType.ProductId)
+
+    }
     cart.push(product);
     sessionStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
