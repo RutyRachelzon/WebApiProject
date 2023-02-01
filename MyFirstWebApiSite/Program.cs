@@ -1,8 +1,9 @@
-
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using MyFirstWebApiSite.Middlwares;
 using NLog.Web;
+using Repository;
 using Service;
-using Z_Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -17,6 +18,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddDbContext<KidsClothesContext>(options => options.UseSqlServer(builder.Configuration.GetValue<string>("ConnectionString")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -29,7 +32,26 @@ builder.Host.UseNLog();
 
 
 var app = builder.Build();
-if(app.Environment.IsDevelopment())
+
+app.UseErrorsMiddleware();
+
+app.Use(async (context, next) =>
+{
+    context.Response.GetTypedHeaders().CacheControl =
+    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+    {
+        Public = true,
+        MaxAge = TimeSpan.FromSeconds(20)
+    };
+    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+    new string[] { "Accept-Encoding" };
+    await next();
+});
+
+app.UseRatingMiddleware();
+
+
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

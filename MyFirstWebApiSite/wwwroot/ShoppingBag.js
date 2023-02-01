@@ -1,5 +1,14 @@
 ﻿window.addEventListener("load", getAndDrowProduct);
 
+function getUserFromSession() {
+    var user = sessionStorage.getItem("user");
+    if (user) {
+        user = JSON.parse(user);
+        return user;
+    }
+    return null;
+}
+
 function getCartFromSession() {
     var cart = sessionStorage.getItem("cart");
     if (cart) {
@@ -17,15 +26,25 @@ function getAndDrowProduct() {
     drowAllCart(cart);
 }
 
+function showCartLength(cart) {
+    if (cart) {
+        var count = 0;
+        cart.forEach(product => {
+            count += product.quantity;
+        })
+        document.getElementById("itemCount").innerHTML = count;
+    }
+}
+
 function totalCart(cart) {
     var sum = 0;
     cart.forEach(product => {
-        sum += product.price;
+        sum += product.productType.price * product.quantity;
     })
     return sum;
 }
 function drowAllCart(cart) {
-    document.getElementById("itemCount").innerHTML = cart.length;
+    showCartLength(cart);
     document.getElementById("totalAmount").innerHTML = totalCart(cart);
     cart.forEach((product,i)=>{
         drowProduct(product,i)
@@ -36,10 +55,11 @@ function drowAllCart(cart) {
 function drowProduct(product, i) {
     var temp = document.getElementsByTagName("template")[0];
     var clon = temp.content.cloneNode(true);
-    console.log(`url(./images/${product.image})`);
-    clon.querySelector(".image").style.backgroundImage = `url(./images/${product.image})`;
-    clon.querySelector(".itemName").innerHTML = product.productName;
-    clon.querySelector(".price").innerHTML = product.price;
+    console.log(`url(./images/${product.productType.image})`);
+    clon.querySelector(".image").style.backgroundImage = `url(./images/${product.productType.image})`;
+    clon.querySelector(".itemName").innerHTML = product.productType.productName;
+    clon.querySelector(".itemNumber").innerHTML = product.quantity;
+    clon.querySelector(".price").innerHTML = product.productType.price * product.quantity;
     clon.querySelector(".showText").addEventListener("click", () => removeProduct(i))
     document.querySelector("#tbodyItems").appendChild(clon);
 
@@ -52,11 +72,14 @@ function removeAllProducts() {
 function removeProduct(i) {
     removeAllProducts();
     const myCart = getCartFromSession();
-    myCart.splice(i,1);
+    if (myCart[i].quantity == 1) {
+        myCart.splice(i, 1);
+    }
+    else {
+        myCart[i].quantity--;
+    }
     saveCartToSessionStorsge(myCart);
     drowAllCart(myCart);
-
-
 }
 async function postOrder(order) {
     const response = await fetch("https://localhost:44335/api/order", {
@@ -74,20 +97,24 @@ async function postOrder(order) {
 }
 
 function placeOrder() {
+    var user = getUserFromSession();
+    if (!user) {
+        window.location.href = "home.html";
+    }
     var cart = getCartFromSession();
     const order = {
         "orderId": 0,
         "date": new Date(),
         "price": document.getElementById("totalAmount").innerHTML,
-        "userId": 302,
+        "userId": user.userId,
         "orderItems": []
     }
     for (var i = 0; i < cart.length; i++) {
         var orderItem = {
             "orderItemId": 0,
             "orderId": 0,
-            "productId": cart[i].productId,
-            "quantity": 1
+            "productId": cart[i].productType.productId,
+            "quantity": cart[i].quantity
         }
         order.orderItems.push(orderItem);
     }

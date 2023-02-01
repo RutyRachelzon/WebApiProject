@@ -1,4 +1,6 @@
-﻿namespace Z_Repository
+﻿using Entites;
+
+namespace Repository
 {
     public interface IOrderRepository
     {

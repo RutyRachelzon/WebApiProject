@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Service;
-using Z_Repository;
 using DTO;
 using AutoMapper;
+using Entites;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,15 +34,8 @@ namespace MyFirstWebApiSite.Controllers
             int zero = 0;
 
             _logger.LogInformation("userName " + userName + " trying login");
-            try
-            {
-                int num = 100 / zero;
-            }
-            catch(Exception e)
-            {
-                _logger.LogError("error happend! " + e.Message);
 
-            }
+            //int num = 100 / zero;
             User user= await _userService.getUserById(password, userName);
             if (user!=null)
             {            
@@ -65,12 +58,6 @@ namespace MyFirstWebApiSite.Controllers
         public Task<User> Put(int id, [FromBody] User user)
         {
             return _userService.updateUser(id, user);
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

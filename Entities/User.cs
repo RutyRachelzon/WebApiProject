@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Z_Repository
+namespace Entites
 {
     public partial class User
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Z_Repository;
 using Service;
 using System.Text.Json;
 using DTO;
 using AutoMapper;
+using Entites;
 
 
 
@@ -32,31 +32,12 @@ namespace MyFirstWebApiSite.Controllers
             return categoryDTO;
         }
 
-        // GET api/<CategoryController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<CategoryController>
         [HttpPost]
         public async Task<ActionResult<Category>> Post([FromBody] Category category)
         {
             Category newCategory = await _categoryService.addNewCategory(category);
             return CreatedAtAction(nameof(Get), new { id = newCategory.CategoryId }, newCategory);
-        }
-
-        // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

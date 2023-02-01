@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Entites;
+using Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Z_Repository;
 namespace Service
 {
     public class ProductService : IProductService

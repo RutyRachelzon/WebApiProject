@@ -21,6 +21,35 @@ async function login() {
         window.location.href = "userDetails.html";
     }
 }
+function userValidate() {
+    flag=true
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const letters = /^[A-Za-z]+$/;
+    if (!document.getElementById("userName").value.match(validRegex)) {
+        document.getElementById("emailValidations").innerHTML = "email is not valid";
+        flag=false;
+    }
+    if (document.getElementById("password").value == "") {
+        document.getElementById("passwordValidation").innerHTML = "password is required";
+        flag = false;
+    }
+  
+    if (document.getElementById("password").value.length > 8 || document.getElementById("password").value.length < 8) { 
+            document.getElementById("passwordValidation").innerHTML = "password should be 8 chars";
+            flag = false;
+        }
+    
+    if (document.getElementById("fName").value.length < 2 || document.getElementById("fName").value.length > 20 || !(document.getElementById("fName").value.match(letters))) {
+        document.getElementById("firstNameValidation").innerHTML = "firatNmae should contain only letters and at least 2 letters";
+        flag=false;
+    }
+    if (document.getElementById("lName").value.length < 2 || document.getElementById("lName").value.length > 20 || !(document.getElementById("lName").value.match(letters))) {
+        document.getElementById("lastNameValidation").innerHTML = "LastName shuld be only letters and at least 2 letters";
+        flag=false;
+    }
+    return flag;
+}
+
 
 function getUserFromHtml( userName,  password,  firstName, lastName) {
     UserName = document.getElementById(userName).value;
@@ -38,6 +67,12 @@ function showLogin() {
 
   // קוד רישום למשתמש חדש
 async function enrollToSite() {
+    document.getElementById("passwordValidation").innerHTML = "";
+    document.getElementById("emailValidations").innerHTML = "";
+    document.getElementById("firstNameValidation").innerHTML = "";
+    document.getElementById("lastNameValidation").innerHTML = "";
+
+    if (userValidate()) { 
     user =getUserFromHtml("userName", "password", "fName", "lName");
     const response = await fetch("https://localhost:44335/api/user", {
         headers: { "Content-type": "application/json" },
@@ -48,6 +83,7 @@ async function enrollToSite() {
         alert("yey!! we happy you chose using our site😀");
     else {
         alert("ooooppss something wrong, please try again later");
+        }
     }
 
 }
@@ -106,11 +142,19 @@ async function checkPassword(){
     console.log(response);
     if (response.ok) {
         const res = await response.json();
-        alert(res);
+        document.getElementById("checkPassword").innerText ="The password strength is "+ res;
     }
     else {
         alert("ooooppss ");
     }
+}
+
+function goShopping() {
+    window.location.href = "product.html";
+}
+function toMyBasket() {
+    window.location.href = "ShoppingBag.html";
+
 }
 
     

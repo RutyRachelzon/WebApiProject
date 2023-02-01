@@ -1,4 +1,4 @@
-﻿using Z_Repository;
+﻿using Entites;
 
 namespace Service
 {

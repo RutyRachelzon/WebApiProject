@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DTO;
-using Z_Repository;
+using Entites;
 
 namespace MyFirstWebApiSite
 {

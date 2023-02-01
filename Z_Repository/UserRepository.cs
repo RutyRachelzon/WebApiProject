@@ -1,5 +1,6 @@
-﻿using System.Text.Json;
-namespace Z_Repository
+﻿using Entites;
+using System.Text.Json;
+namespace Repository
 {
     public class UserRepository : IUserRepository
     {

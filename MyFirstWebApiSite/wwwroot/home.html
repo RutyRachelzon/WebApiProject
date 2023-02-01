@@ -23,18 +23,27 @@
 
     
     
-    <div class="div" id="login" style="visibility:hidden">
-        <label class="words">enter user name(email)</label><br /><br />
-        <input  class="inputs" id="userName" type="text" /><br /><br />
-        <label class="words">enter password</label><br /><br />
-        <input  class="inputs" id="password" type="password" /><br /><br />
-        <button class="words btn wide_btn" onclick="checkPassword()">check password</button><br/><br/>
-        <label class="words">enter first name</label><br /><br />
-        <input  class="inputs" id="fName" type="text" /><br /><br />
-        <label class="words">enter last name</label><br /><br />
-        <input class="inputs" id="lName" type="text" /><br /><br />
-        <button class="words btn" onclick="enrollToSite()">enrolling🤸‍</button>
-    </div>
+        <div class="div" id="login" style="visibility:hidden">
+            <label class="words">enter user name(email)</label><br /><br />
+            <span id="emailValidations"></span>
+            <input class="inputs" id="userName" type="text" /><br /><br />
+            <label class="words">enter password</label><br /><br />
+            <span id="passwordValidation"></span><br />
+
+            <input class="inputs" id="password" type="password" /><br /><br />
+            <button class="words btn wide_btn" onclick="checkPassword()">check password</button><br /><br />
+            <label class="words" id="checkPassword"></label><br /><br />
+            <label class="words">enter first name</label><br /><br />
+
+            <input class="inputs" id="fName" type="text" /><br /><br />
+            <span id="firstNameValidation"></span><br />
+
+            <label class="words">enter last name</label><br /><br />
+            <input class="inputs" id="lName" type="text" /><br /><br />
+            <span id="lastNameValidation"></span><br />
+
+            <button class="words btn" onclick="enrollToSite()">enrolling🤸‍</button>
+        </div>
 
     
 </body>

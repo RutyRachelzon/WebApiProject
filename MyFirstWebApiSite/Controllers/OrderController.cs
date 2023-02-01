@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Z_Repository;
 using Service;
 using DTO;
+using Entites;
 using AutoMapper;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,13 +26,6 @@ namespace MyFirstWebApiSite.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<OrderController>
         [HttpPost]
         public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
@@ -41,18 +34,6 @@ namespace MyFirstWebApiSite.Controllers
             Order afterOrder = await _orderService.addNewOrder(newOrder);
             OrderDTO newOrderDto = _mapper.Map<Order, OrderDTO>(afterOrder);
             return CreatedAtAction(nameof(Get), new { id = newOrder.UserId }, newOrderDto);
-        }
-
-        // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

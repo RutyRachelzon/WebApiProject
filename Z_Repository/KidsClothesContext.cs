@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Z_Repository
+namespace Repository
 {
     public partial class KidsClothesContext : DbContext
     {

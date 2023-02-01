@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using DTO;
+using Entites;
 using Microsoft.AspNetCore.Mvc;
 using Service;
-using Z_Repository;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiSite.Controllers
@@ -28,26 +29,6 @@ namespace MyFirstWebApiSite.Controllers
             IEnumerable<ProductDTO> productsDTO = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
             return productsDTO;
 
-        }
-
-        
-        [HttpPost]
-        public  void Post([FromBody] Product product)
-        {
-        //    Product newProduct = await _productService.addNewProduct(product);
-        //    return CreatedAtAction(nameof(Get), new { id = newProduct.ProductId }, newProduct);
-        }
-
-        // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

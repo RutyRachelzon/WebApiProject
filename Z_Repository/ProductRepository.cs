@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entites;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Z_Repository
+namespace Repository
 {
     public class ProductRepository : IProductRepository
     {
@@ -26,6 +27,14 @@ namespace Z_Repository
                 .Include(p => p.Category);
             List<Product> products = await query.ToListAsync();
             return products;
+        }
+
+        public async Task<Product> getProductById(int id)
+        {
+            var products = (from product in _KidsClothesContext.Products
+                        where product.ProductId == id
+                        select product).ToArray<Product>();
+            return products.FirstOrDefault();
         }
     }
 }

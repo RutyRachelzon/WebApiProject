@@ -17,20 +17,6 @@ namespace MyFirstWebApiSite.Controllers
             _passwordService = IPasswordService;
 
         }
- 
-        // GET: api/<Password>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<Password>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<Password>
         [HttpPost]
@@ -38,18 +24,6 @@ namespace MyFirstWebApiSite.Controllers
         {
             var result= _passwordService.checkPassword(password);
             return result.Score;
-        }
-
-        // PUT api/<Password>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<Password>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
