@@ -3,14 +3,15 @@
     border-color: black;
     border-width: 1px;
     margin-left: 40%;
-    height: 500px;
+    height: 550px;
     width: 450px;
     text-align: center;
     padding-top: 100px;
     margin-right: 100px;
     border-radius: 1%;
     opacity: 80%;
-    background-color: rgb(3 78 70 / 56%);
+    /*background-color: rgb(3 78 70 / 56%);*/
+    background-color: #1a6461;
 }
 .btn {
     border-radius: 10%;
@@ -22,12 +23,23 @@
 
 }
 .inputs {
-    border-color: black;
+    /*border-color: black;
     border-width: 2px;
     width: 200px;
     height: 20px;
     background-color: rgb(183 185 184);
-    border-radius: 10%;
+    border-radius: 10%;*/
+  
+    height: 30px;
+    width: 200px;
+    font-size: 20px;
+    background-color: rgb(230 230 235);
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    outline: none;
+    border-radius: 18px;
+    border-color: rgb(230 230 235);
 }
 .words {
     font-family: cursive;

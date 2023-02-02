@@ -97,11 +97,17 @@ async function postOrder(order) {
 }
 
 function placeOrder() {
+    
     var user = getUserFromSession();
     if (!user) {
         window.location.href = "home.html";
     }
     var cart = getCartFromSession();
+    if (!cart)
+        alert("sorry you didnt buy anything")
+    else if (cart.length==0)
+        alert("sorry you didnt buy anything")
+    else { 
     const order = {
         "orderId": 0,
         "date": new Date(),
@@ -119,5 +125,5 @@ function placeOrder() {
         order.orderItems.push(orderItem);
     }
     postOrder(order);
-}
+}}
 

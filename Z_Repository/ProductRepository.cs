@@ -16,7 +16,7 @@ namespace Repository
         {
             _KidsClothesContext = kidsClothesContext;
         }
-        public async Task<IEnumerable<Product>> getProducts(string? name,int? minPrice,int? maxPrice, int?[] categoryIds)
+        public async Task<IEnumerable<Product>> getProducts(string? name,decimal? minPrice,decimal? maxPrice, int?[] categoryIds)
         {
             var query = _KidsClothesContext.Products.Where(product =>
             (name == null ? (true) : (product.ProductName.Contains(name)))

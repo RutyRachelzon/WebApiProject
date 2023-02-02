@@ -21,29 +21,29 @@ async function login() {
         window.location.href = "userDetails.html";
     }
 }
-function userValidate() {
-    flag=true
+function userValidate(user) {
+    flag = true;
     const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const letters = /^[A-Za-z]+$/;
-    if (!document.getElementById("userName").value.match(validRegex)) {
+    if (!user.userName.match(validRegex)) {
         document.getElementById("emailValidations").innerHTML = "email is not valid";
         flag=false;
     }
-    if (document.getElementById("password").value == "") {
+    if (user.password == "") {
         document.getElementById("passwordValidation").innerHTML = "password is required";
         flag = false;
     }
-  
-    if (document.getElementById("password").value.length > 8 || document.getElementById("password").value.length < 8) { 
+
+    if (user.password.length > 8 || user.password.length < 8) { 
             document.getElementById("passwordValidation").innerHTML = "password should be 8 chars";
             flag = false;
         }
-    
-    if (document.getElementById("fName").value.length < 2 || document.getElementById("fName").value.length > 20 || !(document.getElementById("fName").value.match(letters))) {
+
+    if (user.firstName.length < 2 || user.firstName.length > 20 || !(user.firstName.match(letters))) {
         document.getElementById("firstNameValidation").innerHTML = "firatNmae should contain only letters and at least 2 letters";
         flag=false;
     }
-    if (document.getElementById("lName").value.length < 2 || document.getElementById("lName").value.length > 20 || !(document.getElementById("lName").value.match(letters))) {
+    if (user.lastName.length.length < 2 || user.lastName.length.length > 20 || !(user.lastName.match(letters))) {
         document.getElementById("lastNameValidation").innerHTML = "LastName shuld be only letters and at least 2 letters";
         flag=false;
     }
@@ -71,16 +71,19 @@ async function enrollToSite() {
     document.getElementById("emailValidations").innerHTML = "";
     document.getElementById("firstNameValidation").innerHTML = "";
     document.getElementById("lastNameValidation").innerHTML = "";
-
-    if (userValidate()) { 
     user =getUserFromHtml("userName", "password", "fName", "lName");
+    if (userValidate(user)) { 
+    
     const response = await fetch("https://localhost:44335/api/user", {
         headers: { "Content-type": "application/json" },
         method: 'POST',
         body: JSON.stringify(user)
     });
-    if (response.ok)
-        alert("yey!! we happy you chose using our site😀");
+        if (response.ok) {
+             alert("yey!! we happy you chose using our site😀");
+        }
+      
+
     else {
         alert("ooooppss something wrong, please try again later");
         }
@@ -91,7 +94,12 @@ async function enrollToSite() {
 //קוד עדכון פרטי המשתמש!
 
 async function updateDetails() {
+    document.getElementById("passwordValidation").innerHTML = "";
+    document.getElementById("emailValidations").innerHTML = "";
+    document.getElementById("firstNameValidation").innerHTML = "";
+    document.getElementById("lastNameValidation").innerHTML = "";
     let user = await getUpdatedDetails();
+    if (userValidate(user)) { 
     const response = await fetch(`https://localhost:44335/api/user/${user.userId}`, {
         headers: { "Content-Type": "application/json;charset=utf-8" },
         method: 'PUT',
@@ -101,14 +109,14 @@ async function updateDetails() {
         user = JSON.parse(sessionStorage.getItem('user'));
         alert(`${user.firstName} your details updated successfuly🤗`);
     }
-
+}
 }
 //שליפת פרטי המשתמש בשביל עדכון הפרטים
 function ShowUserDetailsAfterUpdating() {
     const f = document.getElementById("updateDetails");
     f.style.visibility = "visible";
 
-    const passwordAfterUpdating = document.getElementById("passwordD");
+    //const passwordAfterUpdating = document.getElementById("passwordD");
     const fNameAfterUpdating = document.getElementById("fNameD");
     const lNameAfterUpdating = document.getElementById("lNameD");
     const userNameAfterUpdating = document.getElementById("userNameD");
@@ -116,7 +124,7 @@ function ShowUserDetailsAfterUpdating() {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     userNameAfterUpdating.setAttribute("value", user.userName);
-    passwordAfterUpdating.setAttribute("value", user.password);
+    //passwordAfterUpdating.setAttribute("value", user.password);
     fNameAfterUpdating.setAttribute("value", user.firstName);
     lNameAfterUpdating.setAttribute("value", user.lastName); 
 }
@@ -125,6 +133,7 @@ function ShowUserDetailsAfterUpdating() {
 function getUpdatedDetails() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const id = user.userId;
+
     userAfterUpdate = getUserFromHtml("userNameD", "passwordD", "fNameD", "lNameD");
     userAfterUpdate.userId = id;
     sessionStorage.setItem('user', JSON.stringify(userAfterUpdate));
@@ -142,7 +151,9 @@ async function checkPassword(){
     console.log(response);
     if (response.ok) {
         const res = await response.json();
-        document.getElementById("checkPassword").innerText ="The password strength is "+ res;
+        document.getElementById("checkPassword").innerText = "The password strength is " + res;
+        if (res < 2)
+            document.getElementById("passwordValidation").innerHTML="password sould be stronger(try enter big letters)"
     }
     else {
         alert("ooooppss ");

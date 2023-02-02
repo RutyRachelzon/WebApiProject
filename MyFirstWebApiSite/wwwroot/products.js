@@ -1,19 +1,18 @@
 ﻿var cart = [];
 
 
-window.addEventListener("load", drowProducts("https://localhost:44335/api/product"));
+window.addEventListener("load", drowProductsAndGetCartFromSession("https://localhost:44335/api/product"));
 window.addEventListener("load", drowCategories());
 
-async function drowProducts(url) {
+async function drowProductsAndGetCartFromSession(url) {
     await removeAllProducts();
-    const products = await getProducts(url);
-    console.log(products[0].price);
+    let products = await getProducts(url);
     document.getElementById("minPrice").value = products[0].price;
     document.getElementById("maxPrice").value = products[products.length - 1].price;
     const productsWithQuantity = products.map(createProductWithQuantity);
     productsWithQuantity.forEach(drowProduct);
     document.getElementById("counter").innerHTML = products.length;
-    showCartLength();
+    getCartFromSession();
 }
 
 const createProductWithQuantity = (product) => {
@@ -47,9 +46,9 @@ async function drowCategories() {
 }
 
 function drowProduct(Quantityproduct) {
-    var product = Quantityproduct.productType;
-    var temp = document.getElementsByTagName("template")[0];
-    var clon = temp.content.cloneNode(true);
+    const product = Quantityproduct.productType;
+    const temp = document.getElementsByTagName("template")[0];
+    const clon = temp.content.cloneNode(true);
     clon.querySelector("h1").innerText = product.productName;
     clon.querySelector("img").src = "./images/" + product.image;
     clon.querySelector(".price").innerText = product.price;
@@ -58,13 +57,13 @@ function drowProduct(Quantityproduct) {
     document.getElementById("ProductList").appendChild(clon);
 }
 
-async function showCartLength() {
-    var box = sessionStorage.getItem("cart");
+async function getCartFromSession() {
+    const box = sessionStorage.getItem("cart");
     if (box) {
-        var cartLen = JSON.parse(box);
-        cart = cartLen;
-        var count = 0;
-        cartLen.forEach(product => {
+        let cartFromSession = JSON.parse(box);
+        cart = cartFromSession;
+        let count = 0;
+        cart.forEach(product => {
             count += product.quantity;
         })  
         document.getElementById("ItemsCountText").innerHTML = count;
@@ -73,8 +72,8 @@ async function showCartLength() {
 
 
 function addToCart(product) {
-    var isInCart = false;
-    for (var i = 0; i < cart.length; i++) {
+    let isInCart = false;
+    for (let i = 0; i < cart.length; i++) {
 
         const tmpProduct = cart[i];
         if (tmpProduct.productType.productId === product.productType.productId) {
@@ -84,7 +83,7 @@ function addToCart(product) {
     }
     if (!isInCart) {
         if (sessionStorage.getItem("cart")) {
-            var oldCart = sessionStorage.getItem("cart");
+            const oldCart = sessionStorage.getItem("cart");
             const c = JSON.parse(oldCart);
             cart = c;
         }
@@ -99,8 +98,8 @@ function addToCart(product) {
 }
 
 function drowCategory(category) {
-    var temp = document.getElementsByTagName("template")[1];
-    var clon = temp.content.cloneNode(true);
+    let temp = document.getElementsByTagName("template")[1];
+    let clon = temp.content.cloneNode(true);
     clon.querySelector(".OptionName").innerText = category.categoryName;
     clon.querySelector(".opt").value = category.categoryId;
     clon.querySelector(".opt").addEventListener("click", filterProducts);
@@ -131,5 +130,5 @@ async function filterProducts() {
             url = url + `&categoryIds=${categories[i].value}`;
     }
     console.log(url);
-    await drowProducts(url);
+    await drowProductsAndGetCartFromSession(url);
 }

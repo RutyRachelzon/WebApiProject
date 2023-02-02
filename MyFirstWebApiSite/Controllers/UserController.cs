@@ -29,28 +29,50 @@ namespace MyFirstWebApiSite.Controllers
         }
         // GET api/<UserController>/5
         [HttpGet]
-        public async Task<ActionResult<UserDTO>> Get([FromQuery] string password,string userName)
+        //public async Task<ActionResult<UserDTO>> Get([FromQuery] string password,string userName)
+        //{
+            
+
+        //    _logger.LogInformation("userName " + userName + " trying login");
+
+           
+        //    User user= await _userService.getUserById(password, userName);
+        //    if (user!=null)
+        //    {            
+        //        UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+        //        return Ok(userDTO);
+        //    }
+        //    return NoContent();
+        //}
+        public async Task<ActionResult<UserDTO>> Get([FromQuery] string password, string userName)
         {
-            int zero = 0;
+
 
             _logger.LogInformation("userName " + userName + " trying login");
 
-            //int num = 100 / zero;
-            User user= await _userService.getUserById(password, userName);
-            if (user!=null)
-            {            
-                UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
-                return Ok(userDTO);
+            User user = await _userService.getUserById(password, userName);
+            if (user != null)
+            {
+                UserWithOutPasswordDto checkuser = _mapper.Map<User, UserWithOutPasswordDto>(user);
+                return Ok(checkuser);
             }
             return NoContent();
         }
 
+
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] UserDTO newUser)
         {
-            User newUser= await _userService.addNewUser(user);
-            return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
+            User user = _mapper.Map<UserDTO, User>(newUser);
+            User userAdded = await _userService.addNewUser(user);
+            if(userAdded!=null)
+            {
+                UserWithOutPasswordDto userWithOutPassword =_mapper.Map<User, UserWithOutPasswordDto>(userAdded);
+                return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
+
+            }
+            return NotFound();
         }
 
         // PUT api/<UserController>/5

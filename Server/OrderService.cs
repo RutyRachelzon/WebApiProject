@@ -1,4 +1,5 @@
 ﻿using Entites;
+using Microsoft.Extensions.Logging;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Service
 {
+
     public class OrderService : IOrderService
     {
+        private readonly ILogger<OrderService> _logger;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
-        public OrderService(IOrderRepository orderRepository,IProductRepository productRepository)
+        public OrderService(IOrderRepository orderRepository,IProductRepository productRepository,ILogger<OrderService> logger)
         {
+            _logger = logger;
             _orderRepository = orderRepository;
             _productRepository = productRepository;
         }
@@ -24,6 +28,8 @@ namespace Service
                 Product productFromDB = await _productRepository.getProductById(product.ProductId);
                 price += productFromDB.Price * product.Quantity;
             }
+            if (order.Price < price)
+                _logger.LogError("someOne Trying To stole!!!!");
             order.Price = price;
             Order newOrder = await _orderRepository.addNewOrder(order);
             return newOrder;
