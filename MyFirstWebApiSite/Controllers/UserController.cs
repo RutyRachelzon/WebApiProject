@@ -29,21 +29,6 @@ namespace MyFirstWebApiSite.Controllers
         }
         // GET api/<UserController>/5
         [HttpGet]
-        //public async Task<ActionResult<UserDTO>> Get([FromQuery] string password,string userName)
-        //{
-            
-
-        //    _logger.LogInformation("userName " + userName + " trying login");
-
-           
-        //    User user= await _userService.getUserById(password, userName);
-        //    if (user!=null)
-        //    {            
-        //        UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
-        //        return Ok(userDTO);
-        //    }
-        //    return NoContent();
-        //}
         public async Task<ActionResult<UserDTO>> Get([FromQuery] string password, string userName)
         {
 
